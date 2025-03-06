@@ -41,7 +41,7 @@ const CurrentCosts: React.FC<CurrentCostsProps> = ({
       
       <div className="space-y-4">
         <div className="space-y-2">
-          <Label className="text-gray-700">Price per Square Foot</Label>
+          <Label className="text-gray-700">Price per SQ/FT (Material, toner, and ink)</Label>
           <div className="flex items-center">
             <div className="relative w-full">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -146,7 +146,7 @@ const CurrentCosts: React.FC<CurrentCostsProps> = ({
         
         <div className="space-y-2">
           <Label className="text-gray-700 flex items-center gap-1">
-            <BadgeDollarSign className="h-4 w-4" /> Payroll (monthly)
+            <BadgeDollarSign className="h-4 w-4" /> Production Payroll (monthly)
           </Label>
           <div className="flex items-center">
             <div className="relative w-full">
