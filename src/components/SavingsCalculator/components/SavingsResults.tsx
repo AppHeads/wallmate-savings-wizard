@@ -34,8 +34,8 @@ const SavingsResults: React.FC<SavingsResultsProps> = ({
       <div className="p-6 bg-gradient-to-br from-[#fff8f6] to-[#fff1ed] rounded-lg border border-[#FFE3D9] shadow-sm">
         <div className="text-center">
           <p className="text-sm text-gray-500 mb-1">Your savings</p>
-          <div className="overflow-hidden">
-            <p className="text-4xl md:text-5xl font-bold text-[#FF6D3F] tracking-tight">
+          <div className="w-full overflow-hidden">
+            <p className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#FF6D3F] tracking-tight truncate">
               {formatCurrency(savings)}
             </p>
           </div>
