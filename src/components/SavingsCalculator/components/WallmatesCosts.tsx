@@ -22,52 +22,71 @@ const WallmatesCosts: React.FC<WallmatesCostsProps> = ({
   setWallmatesShipping,
 }) => {
   return (
-    <div className="w-full md:w-1/2 space-y-2">
-      <Label className="flex items-center gap-2 text-lg font-medium text-[#FF6D3F]">
-        <DollarSign className="w-5 h-5" />
-        Wallmates Costs (Editable)
+    <div className="w-full">
+      <Label className="block text-lg font-semibold text-[#FF6D3F] mb-2">
+        Wallmates Costs (Adjustable)
       </Label>
-      <div className="space-y-4 p-4 bg-gray-50 rounded-lg">
+      
+      <div className="space-y-4">
         <div className="space-y-2">
           <Label className="text-gray-700">Price per Square Foot</Label>
-          <Input
-            type="number"
-            step="0.01"
-            placeholder="Wallmates price per sq ft"
-            value={wallmatesPricePerSqFt}
-            onChange={(e) => setWallmatesPricePerSqFt(e.target.value)}
-            className="transition-all duration-200 focus:ring-2 focus:ring-[#FF6D3F] border-[#FF6D3F]/20"
-          />
+          <div className="flex items-center">
+            <div className="relative w-full">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <span className="text-gray-500 sm:text-sm">$</span>
+              </div>
+              <Input
+                type="number"
+                step="0.01"
+                placeholder="0.00"
+                value={wallmatesPricePerSqFt}
+                onChange={(e) => setWallmatesPricePerSqFt(e.target.value)}
+                className="pl-7 transition-all duration-200 focus:ring-2 focus:ring-[#FF6D3F] border-[#FF6D3F]/20"
+              />
+            </div>
+          </div>
         </div>
 
         <div className="space-y-2">
-          <Label className="flex items-center gap-2">
-            <Package className="w-4 h-4" />
+          <Label className="text-gray-700">
             Box & Supplies Cost (per shipment)
           </Label>
-          <Input
-            type="number"
-            step="0.01"
-            placeholder="Wallmates box cost"
-            value={wallmatesBoxCost}
-            onChange={(e) => setWallmatesBoxCost(e.target.value)}
-            className="transition-all duration-200 focus:ring-2 focus:ring-[#FF6D3F] border-[#FF6D3F]/20"
-          />
+          <div className="flex items-center">
+            <div className="relative w-full">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <span className="text-gray-500 sm:text-sm">$</span>
+              </div>
+              <Input
+                type="number"
+                step="0.01"
+                placeholder="0.00"
+                value={wallmatesBoxCost}
+                onChange={(e) => setWallmatesBoxCost(e.target.value)}
+                className="pl-7 transition-all duration-200 focus:ring-2 focus:ring-[#FF6D3F] border-[#FF6D3F]/20"
+              />
+            </div>
+          </div>
         </div>
 
         <div className="space-y-2">
-          <Label className="flex items-center gap-2">
-            <Truck className="w-4 h-4" />
+          <Label className="text-gray-700">
             Shipping Cost (per shipment)
           </Label>
-          <Input
-            type="number"
-            step="0.01"
-            placeholder="Wallmates shipping cost"
-            value={wallmatesShipping}
-            onChange={(e) => setWallmatesShipping(e.target.value)}
-            className="transition-all duration-200 focus:ring-2 focus:ring-[#FF6D3F] border-[#FF6D3F]/20"
-          />
+          <div className="flex items-center">
+            <div className="relative w-full">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <span className="text-gray-500 sm:text-sm">$</span>
+              </div>
+              <Input
+                type="number"
+                step="0.01"
+                placeholder="0.00"
+                value={wallmatesShipping}
+                onChange={(e) => setWallmatesShipping(e.target.value)}
+                className="pl-7 transition-all duration-200 focus:ring-2 focus:ring-[#FF6D3F] border-[#FF6D3F]/20"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>

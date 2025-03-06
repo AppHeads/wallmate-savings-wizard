@@ -22,52 +22,71 @@ const CurrentCosts: React.FC<CurrentCostsProps> = ({
   setShippingCost,
 }) => {
   return (
-    <div className="w-full md:w-1/2 space-y-2">
-      <Label className="flex items-center gap-2 text-lg font-medium text-gray-900">
-        <DollarSign className="w-5 h-5" />
-        Your Current Costs
+    <div className="w-full">
+      <Label className="block text-lg font-semibold text-gray-900 mb-2">
+        Your Current Costs <span className="text-[#FF6D3F]">*</span>
       </Label>
-      <div className="space-y-4 p-4 bg-gray-50 rounded-lg">
+      
+      <div className="space-y-4">
         <div className="space-y-2">
           <Label className="text-gray-700">Price per Square Foot</Label>
-          <Input
-            type="number"
-            step="0.01"
-            placeholder="Enter current price"
-            value={currentPricePerSqFt}
-            onChange={(e) => setCurrentPricePerSqFt(e.target.value)}
-            className="transition-all duration-200 focus:ring-2 focus:ring-[#FF6D3F]"
-          />
+          <div className="flex items-center">
+            <div className="relative w-full">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <span className="text-gray-500 sm:text-sm">$</span>
+              </div>
+              <Input
+                type="number"
+                step="0.01"
+                placeholder="0.00"
+                value={currentPricePerSqFt}
+                onChange={(e) => setCurrentPricePerSqFt(e.target.value)}
+                className="pl-7 transition-all duration-200 focus:ring-2 focus:ring-[#FF6D3F]"
+              />
+            </div>
+          </div>
         </div>
 
         <div className="space-y-2">
-          <Label className="flex items-center gap-2">
-            <Package className="w-4 h-4" />
+          <Label className="text-gray-700">
             Box & Supplies Cost (per shipment)
           </Label>
-          <Input
-            type="number"
-            step="0.01"
-            placeholder="Enter box & supplies cost"
-            value={boxSuppliesCost}
-            onChange={(e) => setBoxSuppliesCost(e.target.value)}
-            className="transition-all duration-200 focus:ring-2 focus:ring-[#FF6D3F]"
-          />
+          <div className="flex items-center">
+            <div className="relative w-full">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <span className="text-gray-500 sm:text-sm">$</span>
+              </div>
+              <Input
+                type="number"
+                step="0.01"
+                placeholder="0.00"
+                value={boxSuppliesCost}
+                onChange={(e) => setBoxSuppliesCost(e.target.value)}
+                className="pl-7 transition-all duration-200 focus:ring-2 focus:ring-[#FF6D3F]"
+              />
+            </div>
+          </div>
         </div>
 
         <div className="space-y-2">
-          <Label className="flex items-center gap-2">
-            <Truck className="w-4 h-4" />
+          <Label className="text-gray-700">
             Shipping Cost (per shipment)
           </Label>
-          <Input
-            type="number"
-            step="0.01"
-            placeholder="Enter shipping cost"
-            value={shippingCost}
-            onChange={(e) => setShippingCost(e.target.value)}
-            className="transition-all duration-200 focus:ring-2 focus:ring-[#FF6D3F]"
-          />
+          <div className="flex items-center">
+            <div className="relative w-full">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <span className="text-gray-500 sm:text-sm">$</span>
+              </div>
+              <Input
+                type="number"
+                step="0.01"
+                placeholder="0.00"
+                value={shippingCost}
+                onChange={(e) => setShippingCost(e.target.value)}
+                className="pl-7 transition-all duration-200 focus:ring-2 focus:ring-[#FF6D3F]"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>

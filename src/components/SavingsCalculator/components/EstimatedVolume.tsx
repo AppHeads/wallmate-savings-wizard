@@ -14,20 +14,21 @@ const EstimatedVolume: React.FC<EstimatedVolumeProps> = ({
   setMonthlySqFt 
 }) => {
   return (
-    <div className="w-full space-y-2">
-      <Label className="flex items-center gap-2 text-lg font-medium text-[#FF6D3F]">
-        <Calculator className="w-5 h-5" />
-        Estimated Monthly Volume
+    <div className="w-full">
+      <Label className="block text-lg font-semibold text-gray-900 mb-2">
+        Estimated Monthly Volume <span className="text-[#FF6D3F]">*</span>
       </Label>
-      <div className="space-y-4 p-4 bg-gray-50 rounded-lg">
-        <div className="space-y-2">
-          <Label className="text-gray-700">Square Feet Printed Monthly</Label>
+      <div className="flex items-center">
+        <div className="relative w-full">
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <span className="text-gray-500 sm:text-sm">sq ft</span>
+          </div>
           <Input
             type="number"
             placeholder="Enter monthly volume"
             value={monthlySqFt}
             onChange={(e) => setMonthlySqFt(e.target.value)}
-            className="transition-all duration-200 focus:ring-2 focus:ring-[#FF6D3F]"
+            className="pl-16 transition-all duration-200 focus:ring-2 focus:ring-[#FF6D3F]"
           />
         </div>
       </div>

@@ -19,42 +19,53 @@ const SavingsResults: React.FC<SavingsResultsProps> = ({
   formatCurrency,
 }) => {
   if (!showResults) {
-    return null;
+    return (
+      <div className="flex items-center justify-center h-64 bg-gray-50 rounded-lg">
+        <p className="text-gray-500">Enter values to see your potential savings</p>
+      </div>
+    );
   }
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="mt-8 space-y-6"
+      className="space-y-4"
     >
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="p-4 bg-gray-50 rounded-lg">
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">Your Current Monthly Cost</h3>
-          <p className="text-3xl font-bold text-gray-800">
-            {formatCurrency(currentTotalCost)}
-          </p>
-        </div>
-        
-        <div className="p-4 bg-gray-50 rounded-lg">
-          <h3 className="text-lg font-semibold text-[#FF6D3F] mb-2">Wallmates Monthly Cost</h3>
+      <div className="relative mx-auto w-48 h-48 flex items-center justify-center rounded-full border-4 border-[#FF6D3F]">
+        <div className="text-center">
+          <p className="text-sm text-gray-500">Your savings</p>
           <p className="text-3xl font-bold text-[#FF6D3F]">
-            {formatCurrency(wallmatesTotalCost)}
+            {formatCurrency(savings)}
           </p>
+          <p className="text-xs text-gray-500">per month</p>
         </div>
       </div>
       
-      <div className="p-6 bg-gradient-to-r from-[#FF6D3F]/10 to-white rounded-lg text-center">
-        <div className="flex items-center justify-center mb-2">
-          <ArrowLeftRight className="w-6 h-6 text-[#FF6D3F] mr-2" />
-          <h3 className="text-xl font-semibold text-gray-900">Your Estimated Monthly Savings</h3>
+      <div className="space-y-2 p-4 bg-gray-50 rounded-lg">
+        <div className="flex justify-between items-center">
+          <span className="text-sm text-gray-600">Current Cost</span>
+          <span className="font-medium">{formatCurrency(currentTotalCost)}</span>
         </div>
-        <p className="text-4xl font-bold text-[#FF6D3F]">
-          {formatCurrency(savings)}
-        </p>
-        <p className="mt-4 text-sm text-gray-600">
-          Switch to Wallmates and start saving today!
-        </p>
+        
+        <div className="flex justify-between items-center">
+          <span className="text-sm text-gray-600">Wallmates Cost</span>
+          <span className="font-medium text-[#FF6D3F]">{formatCurrency(wallmatesTotalCost)}</span>
+        </div>
+        
+        <div className="flex justify-between items-center pt-2 mt-2 border-t border-gray-200">
+          <span className="text-sm font-medium">Monthly Savings</span>
+          <span className="font-bold text-[#FF6D3F]">{formatCurrency(savings)}</span>
+        </div>
+        
+        <div className="flex justify-between items-center">
+          <span className="text-sm font-medium">Annual Savings</span>
+          <span className="font-bold text-[#FF6D3F]">{formatCurrency(savings * 12)}</span>
+        </div>
+      </div>
+      
+      <div className="text-center text-sm text-gray-500 mt-4">
+        <p>Switch to Wallmates and start saving today!</p>
       </div>
     </motion.div>
   );
