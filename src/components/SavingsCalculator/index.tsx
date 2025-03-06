@@ -49,8 +49,15 @@ const SavingsCalculator = () => {
 
   return (
     <Card className="w-full max-w-4xl mx-auto p-6 space-y-8 bg-white shadow-lg rounded-xl border border-gray-200">
-      <div className="text-center space-y-2">
-        <h2 className="text-2xl font-semibold text-gray-900">Wallmates Savings Calculator</h2>
+      <div className="text-center space-y-4">
+        <div className="flex justify-center mb-2">
+          <img 
+            src="/lovable-uploads/3150b3ba-2981-4e47-a59a-1b68732c5303.png" 
+            alt="Wallmates Logo" 
+            className="h-12" 
+          />
+        </div>
+        <h2 className="text-2xl font-semibold text-gray-900">Savings Calculator</h2>
         <p className="text-gray-600">Compare your current costs with Wallmates to see your potential savings</p>
       </div>
 
