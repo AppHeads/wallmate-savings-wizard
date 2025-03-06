@@ -24,7 +24,7 @@ const WallmatesCosts: React.FC<WallmatesCostsProps> = ({
   return (
     <div className="w-full">
       <Label className="block text-lg font-semibold text-[#FF6D3F] mb-2">
-        Wallmates Costs (Adjustable)
+        Estimated Wallmates Costs
       </Label>
       
       <div className="space-y-4">
