@@ -12,6 +12,18 @@ export default defineConfig({
     },
   },
   server: {
+    port: 8080,
+    // Add the allowed host configuration
+    cors: true,
+    strictPort: true,
+    host: true,
+    hmr: {
+      clientPort: 443
+    }
+  },
+  // Add the allowedHosts configuration
+  preview: {
+    host: true,
     port: 8080
   },
   build: {
