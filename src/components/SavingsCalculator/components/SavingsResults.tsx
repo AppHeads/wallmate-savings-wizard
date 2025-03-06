@@ -1,6 +1,5 @@
 
 import React from 'react';
-import { ArrowLeftRight } from "lucide-react";
 import { motion } from "framer-motion";
 
 interface SavingsResultsProps {
@@ -32,13 +31,15 @@ const SavingsResults: React.FC<SavingsResultsProps> = ({
       animate={{ opacity: 1, y: 0 }}
       className="space-y-4"
     >
-      <div className="relative mx-auto w-48 h-48 flex items-center justify-center rounded-full border-4 border-[#FF6D3F]">
+      <div className="p-6 bg-gradient-to-br from-[#fff8f6] to-[#fff1ed] rounded-lg border border-[#FFE3D9] shadow-sm">
         <div className="text-center">
-          <p className="text-sm text-gray-500">Your savings</p>
-          <p className="text-3xl font-bold text-[#FF6D3F]">
-            {formatCurrency(savings)}
-          </p>
-          <p className="text-xs text-gray-500">per month</p>
+          <p className="text-sm text-gray-500 mb-1">Your savings</p>
+          <div className="overflow-hidden">
+            <p className="text-4xl md:text-5xl font-bold text-[#FF6D3F] tracking-tight">
+              {formatCurrency(savings)}
+            </p>
+          </div>
+          <p className="text-xs text-gray-500 mt-1">per month</p>
         </div>
       </div>
       
