@@ -1,5 +1,5 @@
 
-import { SavingsCalculator } from "@/components/SavingsCalculator";
+import SavingsCalculator from "@/components/SavingsCalculator";
 
 const Index = () => {
   return (
