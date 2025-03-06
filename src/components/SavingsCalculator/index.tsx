@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -52,11 +51,6 @@ const SavingsCalculator = () => {
     <div className="w-full max-w-4xl mx-auto bg-white">
       <div className="text-left mb-8">
         <div className="flex flex-col items-start gap-2 mb-4">
-          <img 
-            src="/lovable-uploads/3150b3ba-2981-4e47-a59a-1b68732c5303.png" 
-            alt="Wallmates Logo" 
-            className="h-10"
-          />
           <h1 className="text-3xl font-bold text-gray-900">Savings Calculator</h1>
         </div>
         <p className="text-gray-600 text-lg">
