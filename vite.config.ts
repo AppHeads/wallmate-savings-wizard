@@ -19,7 +19,9 @@ export default defineConfig({
     host: true,
     hmr: {
       clientPort: 443
-    }
+    },
+    // Add the specific host to allowedHosts
+    allowedHosts: ['962353f4-ab46-4b20-a746-e1ca1e52a027.lovableproject.com']
   },
   // Add the allowedHosts configuration
   preview: {
