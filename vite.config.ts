@@ -12,7 +12,8 @@ export default defineConfig({
     },
   },
   server: {
-    port: 8080
+    port: 8080,
+    allowedHosts: ['962353f4-ab46-4b20-a746-e1ca1e52a027.lovableproject.com'],
   },
   build: {
     rollupOptions: {
