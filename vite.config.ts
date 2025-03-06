@@ -13,7 +13,19 @@ export default defineConfig({
   },
   server: {
     port: 8080,
-    allowedHosts: ['962353f4-ab46-4b20-a746-e1ca1e52a027.lovableproject.com'],
+    // Add the allowed host configuration
+    cors: true,
+    strictPort: true,
+    host: true,
+    hmr: {
+      clientPort: 443
+    },
+    // Add the specific host to allowedHosts
+    allowedHosts: ['962353f4-ab46-4b20-a746-e1ca1e52a027.lovableproject.com']
+  },
+  // Add the allowedHosts configuration
+  preview: {
+    host: true,
   },
   build: {
     rollupOptions: {

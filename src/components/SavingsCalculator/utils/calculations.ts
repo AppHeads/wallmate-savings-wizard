@@ -9,7 +9,10 @@ export const calculateSavings = (
   shippingCost: string,
   wallmatesPricePerSqFt: string,
   wallmatesBoxCost: string,
-  wallmatesShipping: string
+  wallmatesShipping: string,
+  warehouseCost: string = '0',
+  printerCost: string = '0',
+  payrollCost: string = '0'
 ) => {
   // Parse all input values
   const currentPriceParsed = parseFloat(currentPricePerSqFt);
@@ -21,6 +24,11 @@ export const calculateSavings = (
   const wallmatesBoxParsed = parseFloat(wallmatesBoxCost);
   const wallmatesShippingParsed = parseFloat(wallmatesShipping);
   
+  // Parse new cost fields
+  const warehouseCostParsed = parseFloat(warehouseCost || '0');
+  const printerCostParsed = parseFloat(printerCost || '0');
+  const payrollCostParsed = parseFloat(payrollCost || '0');
+  
   // Estimate number of shipments per month (assume average 50 sq ft per order)
   const estimatedShipmentsPerMonth = Math.ceil(monthlySqFtParsed / 50);
   
@@ -28,7 +36,8 @@ export const calculateSavings = (
   const currentMonthlyPrinting = currentPriceParsed * monthlySqFtParsed;
   const currentMonthlyBoxes = boxCostParsed * estimatedShipmentsPerMonth;
   const currentMonthlyShipping = shippingCostParsed * estimatedShipmentsPerMonth;
-  const currentTotal = currentMonthlyPrinting + currentMonthlyBoxes + currentMonthlyShipping;
+  const currentMonthlyOverhead = warehouseCostParsed + printerCostParsed + payrollCostParsed;
+  const currentTotal = currentMonthlyPrinting + currentMonthlyBoxes + currentMonthlyShipping + currentMonthlyOverhead;
   
   // Calculate Wallmates costs
   const wallmatesMonthlyPrinting = wallmatesPriceParsed * monthlySqFtParsed;
@@ -42,7 +51,15 @@ export const calculateSavings = (
   return {
     currentTotalCost: currentTotal,
     wallmatesTotalCost: wallmatesTotal,
-    savings: monthlySavings
+    savings: monthlySavings,
+    currentBreakdown: {
+      printing: currentMonthlyPrinting,
+      boxes: currentMonthlyBoxes,
+      shipping: currentMonthlyShipping,
+      warehouse: warehouseCostParsed,
+      printer: printerCostParsed,
+      payroll: payrollCostParsed
+    }
   };
 };
 

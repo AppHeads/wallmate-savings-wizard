@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -14,6 +15,11 @@ const SavingsCalculator = () => {
   const [boxSuppliesCost, setBoxSuppliesCost] = useState<string>('');
   const [shippingCost, setShippingCost] = useState<string>('');
   
+  // New cost fields
+  const [warehouseCost, setWarehouseCost] = useState<string>('');
+  const [printerCost, setPrinterCost] = useState<string>('');
+  const [payrollCost, setPayrollCost] = useState<string>('');
+  
   // Wallmates costs (editable for negotiation)
   const [wallmatesPricePerSqFt, setWallmatesPricePerSqFt] = useState<string>('0.50');
   const [wallmatesBoxCost, setWallmatesBoxCost] = useState<string>('2');
@@ -23,6 +29,7 @@ const SavingsCalculator = () => {
   const [currentTotalCost, setCurrentTotalCost] = useState<number>(0);
   const [wallmatesTotalCost, setWallmatesTotalCost] = useState<number>(0);
   const [savings, setSavings] = useState<number>(0);
+  const [currentBreakdown, setCurrentBreakdown] = useState<any>({});
   const [showResults, setShowResults] = useState(false);
 
   useEffect(() => {
@@ -36,16 +43,21 @@ const SavingsCalculator = () => {
         shippingCost,
         wallmatesPricePerSqFt,
         wallmatesBoxCost,
-        wallmatesShipping
+        wallmatesShipping,
+        warehouseCost,
+        printerCost,
+        payrollCost
       );
       
       setCurrentTotalCost(results.currentTotalCost);
       setWallmatesTotalCost(results.wallmatesTotalCost);
       setSavings(results.savings);
+      setCurrentBreakdown(results.currentBreakdown);
       setShowResults(true);
     }
   }, [currentPricePerSqFt, monthlySqFt, boxSuppliesCost, shippingCost, 
-      wallmatesPricePerSqFt, wallmatesBoxCost, wallmatesShipping]);
+      wallmatesPricePerSqFt, wallmatesBoxCost, wallmatesShipping,
+      warehouseCost, printerCost, payrollCost]);
 
   return (
     <div className="w-full max-w-4xl mx-auto bg-white">
@@ -74,6 +86,12 @@ const SavingsCalculator = () => {
             setBoxSuppliesCost={setBoxSuppliesCost}
             shippingCost={shippingCost}
             setShippingCost={setShippingCost}
+            warehouseCost={warehouseCost}
+            setWarehouseCost={setWarehouseCost}
+            printerCost={printerCost}
+            setPrinterCost={setPrinterCost}
+            payrollCost={payrollCost}
+            setPayrollCost={setPayrollCost}
           />
 
           <WallmatesCosts 
@@ -106,19 +124,53 @@ const SavingsCalculator = () => {
                 <h3 className="font-medium text-gray-900">Cost Breakdown Details</h3>
                 {showResults && (
                   <div className="space-y-2 text-sm">
+                    <p className="font-medium text-gray-900 mb-2">Your Current Costs:</p>
                     <p className="flex justify-between">
-                      <span>Current Monthly Cost:</span>
-                      <span className="font-medium">{formatCurrency(currentTotalCost)}</span>
+                      <span>Printing:</span>
+                      <span className="font-medium">{formatCurrency(currentBreakdown.printing || 0)}</span>
                     </p>
+                    <p className="flex justify-between">
+                      <span>Box & Supplies:</span>
+                      <span className="font-medium">{formatCurrency(currentBreakdown.boxes || 0)}</span>
+                    </p>
+                    <p className="flex justify-between">
+                      <span>Shipping:</span>
+                      <span className="font-medium">{formatCurrency(currentBreakdown.shipping || 0)}</span>
+                    </p>
+                    {currentBreakdown.warehouse > 0 && (
+                      <p className="flex justify-between">
+                        <span>Warehouse & Facilities:</span>
+                        <span className="font-medium">{formatCurrency(currentBreakdown.warehouse || 0)}</span>
+                      </p>
+                    )}
+                    {currentBreakdown.printer > 0 && (
+                      <p className="flex justify-between">
+                        <span>Printer Cost:</span>
+                        <span className="font-medium">{formatCurrency(currentBreakdown.printer || 0)}</span>
+                      </p>
+                    )}
+                    {currentBreakdown.payroll > 0 && (
+                      <p className="flex justify-between">
+                        <span>Payroll:</span>
+                        <span className="font-medium">{formatCurrency(currentBreakdown.payroll || 0)}</span>
+                      </p>
+                    )}
+                    <p className="flex justify-between font-semibold pt-2 mt-2 border-t">
+                      <span>Current Monthly Total:</span>
+                      <span>{formatCurrency(currentTotalCost)}</span>
+                    </p>
+                    
+                    <p className="font-medium text-gray-900 mb-2 mt-4">Wallmates Costs:</p>
                     <p className="flex justify-between">
                       <span>Wallmates Monthly Cost:</span>
                       <span className="font-medium text-[#FF6D3F]">{formatCurrency(wallmatesTotalCost)}</span>
                     </p>
-                    <p className="flex justify-between border-t pt-2 mt-2">
+                    
+                    <p className="flex justify-between border-t pt-2 mt-4">
                       <span>Monthly Savings:</span>
                       <span className="font-bold text-[#FF6D3F]">{formatCurrency(savings)}</span>
                     </p>
-                    <p className="flex justify-between border-t pt-2 mt-2">
+                    <p className="flex justify-between">
                       <span>Annual Savings:</span>
                       <span className="font-bold text-[#FF6D3F]">{formatCurrency(savings * 12)}</span>
                     </p>
