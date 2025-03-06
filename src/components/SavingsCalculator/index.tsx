@@ -1,10 +1,11 @@
 
 import React, { useState, useEffect } from 'react';
 import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Calculator, DollarSign, Package, Truck, ArrowLeftRight } from "lucide-react";
-import { motion } from "framer-motion";
+import EstimatedVolume from "./components/EstimatedVolume";
+import CurrentCosts from "./components/CurrentCosts";
+import WallmatesCosts from "./components/WallmatesCosts";
+import SavingsResults from "./components/SavingsResults";
+import { calculateSavings, formatCurrency } from "./utils/calculations";
 
 const SavingsCalculator = () => {
   // Current costs
@@ -27,53 +28,24 @@ const SavingsCalculator = () => {
   useEffect(() => {
     if (currentPricePerSqFt && monthlySqFt && boxSuppliesCost && shippingCost &&
         wallmatesPricePerSqFt && wallmatesBoxCost && wallmatesShipping) {
-      calculateSavings();
+      
+      const results = calculateSavings(
+        currentPricePerSqFt,
+        monthlySqFt,
+        boxSuppliesCost,
+        shippingCost,
+        wallmatesPricePerSqFt,
+        wallmatesBoxCost,
+        wallmatesShipping
+      );
+      
+      setCurrentTotalCost(results.currentTotalCost);
+      setWallmatesTotalCost(results.wallmatesTotalCost);
+      setSavings(results.savings);
+      setShowResults(true);
     }
   }, [currentPricePerSqFt, monthlySqFt, boxSuppliesCost, shippingCost, 
       wallmatesPricePerSqFt, wallmatesBoxCost, wallmatesShipping]);
-
-  const calculateSavings = () => {
-    // Parse all input values
-    const currentPriceParsed = parseFloat(currentPricePerSqFt);
-    const monthlySqFtParsed = parseFloat(monthlySqFt);
-    const boxCostParsed = parseFloat(boxSuppliesCost);
-    const shippingCostParsed = parseFloat(shippingCost);
-    
-    const wallmatesPriceParsed = parseFloat(wallmatesPricePerSqFt);
-    const wallmatesBoxParsed = parseFloat(wallmatesBoxCost);
-    const wallmatesShippingParsed = parseFloat(wallmatesShipping);
-    
-    // Estimate number of shipments per month (assume average 50 sq ft per order)
-    const estimatedShipmentsPerMonth = Math.ceil(monthlySqFtParsed / 50);
-    
-    // Calculate current costs
-    const currentMonthlyPrinting = currentPriceParsed * monthlySqFtParsed;
-    const currentMonthlyBoxes = boxCostParsed * estimatedShipmentsPerMonth;
-    const currentMonthlyShipping = shippingCostParsed * estimatedShipmentsPerMonth;
-    const currentTotal = currentMonthlyPrinting + currentMonthlyBoxes + currentMonthlyShipping;
-    
-    // Calculate Wallmates costs
-    const wallmatesMonthlyPrinting = wallmatesPriceParsed * monthlySqFtParsed;
-    const wallmatesMonthlyBoxes = wallmatesBoxParsed * estimatedShipmentsPerMonth;
-    const wallmatesMonthlyShipping = wallmatesShippingParsed * estimatedShipmentsPerMonth;
-    const wallmatesTotal = wallmatesMonthlyPrinting + wallmatesMonthlyBoxes + wallmatesMonthlyShipping;
-    
-    // Calculate savings
-    const monthlySavings = currentTotal - wallmatesTotal;
-    
-    // Update state
-    setCurrentTotalCost(currentTotal);
-    setWallmatesTotalCost(wallmatesTotal);
-    setSavings(monthlySavings);
-    setShowResults(true);
-  };
-
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-    }).format(amount);
-  };
 
   return (
     <Card className="w-full max-w-4xl mx-auto p-6 space-y-8 bg-white shadow-lg rounded-xl border border-gray-200">
@@ -82,168 +54,38 @@ const SavingsCalculator = () => {
         <p className="text-gray-600">Compare your current costs with Wallmates to see your potential savings</p>
       </div>
 
-      <div className="flex flex-col md:flex-row gap-6">
-        {/* Estimated Monthly Volume */}
-        <div className="w-full space-y-2">
-          <Label className="flex items-center gap-2 text-lg font-medium text-[#FF6D3F]">
-            <Calculator className="w-5 h-5" />
-            Estimated Monthly Volume
-          </Label>
-          <div className="space-y-4 p-4 bg-gray-50 rounded-lg">
-            <div className="space-y-2">
-              <Label className="text-gray-700">Square Feet Printed Monthly</Label>
-              <Input
-                type="number"
-                placeholder="Enter monthly volume"
-                value={monthlySqFt}
-                onChange={(e) => setMonthlySqFt(e.target.value)}
-                className="transition-all duration-200 focus:ring-2 focus:ring-[#FF6D3F]"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
+      <EstimatedVolume 
+        monthlySqFt={monthlySqFt}
+        setMonthlySqFt={setMonthlySqFt}
+      />
 
       <div className="flex flex-col md:flex-row gap-6">
-        {/* Current Costs Column */}
-        <div className="w-full md:w-1/2 space-y-2">
-          <Label className="flex items-center gap-2 text-lg font-medium text-gray-900">
-            <DollarSign className="w-5 h-5" />
-            Your Current Costs
-          </Label>
-          <div className="space-y-4 p-4 bg-gray-50 rounded-lg">
-            <div className="space-y-2">
-              <Label className="text-gray-700">Price per Square Foot</Label>
-              <Input
-                type="number"
-                step="0.01"
-                placeholder="Enter current price"
-                value={currentPricePerSqFt}
-                onChange={(e) => setCurrentPricePerSqFt(e.target.value)}
-                className="transition-all duration-200 focus:ring-2 focus:ring-[#FF6D3F]"
-              />
-            </div>
+        <CurrentCosts 
+          currentPricePerSqFt={currentPricePerSqFt}
+          setCurrentPricePerSqFt={setCurrentPricePerSqFt}
+          boxSuppliesCost={boxSuppliesCost}
+          setBoxSuppliesCost={setBoxSuppliesCost}
+          shippingCost={shippingCost}
+          setShippingCost={setShippingCost}
+        />
 
-            <div className="space-y-2">
-              <Label className="flex items-center gap-2">
-                <Package className="w-4 h-4" />
-                Box & Supplies Cost (per shipment)
-              </Label>
-              <Input
-                type="number"
-                step="0.01"
-                placeholder="Enter box & supplies cost"
-                value={boxSuppliesCost}
-                onChange={(e) => setBoxSuppliesCost(e.target.value)}
-                className="transition-all duration-200 focus:ring-2 focus:ring-[#FF6D3F]"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label className="flex items-center gap-2">
-                <Truck className="w-4 h-4" />
-                Shipping Cost (per shipment)
-              </Label>
-              <Input
-                type="number"
-                step="0.01"
-                placeholder="Enter shipping cost"
-                value={shippingCost}
-                onChange={(e) => setShippingCost(e.target.value)}
-                className="transition-all duration-200 focus:ring-2 focus:ring-[#FF6D3F]"
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Wallmates Costs Column */}
-        <div className="w-full md:w-1/2 space-y-2">
-          <Label className="flex items-center gap-2 text-lg font-medium text-[#FF6D3F]">
-            <DollarSign className="w-5 h-5" />
-            Wallmates Costs (Editable)
-          </Label>
-          <div className="space-y-4 p-4 bg-gray-50 rounded-lg">
-            <div className="space-y-2">
-              <Label className="text-gray-700">Price per Square Foot</Label>
-              <Input
-                type="number"
-                step="0.01"
-                placeholder="Wallmates price per sq ft"
-                value={wallmatesPricePerSqFt}
-                onChange={(e) => setWallmatesPricePerSqFt(e.target.value)}
-                className="transition-all duration-200 focus:ring-2 focus:ring-[#FF6D3F] border-[#FF6D3F]/20"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label className="flex items-center gap-2">
-                <Package className="w-4 h-4" />
-                Box & Supplies Cost (per shipment)
-              </Label>
-              <Input
-                type="number"
-                step="0.01"
-                placeholder="Wallmates box cost"
-                value={wallmatesBoxCost}
-                onChange={(e) => setWallmatesBoxCost(e.target.value)}
-                className="transition-all duration-200 focus:ring-2 focus:ring-[#FF6D3F] border-[#FF6D3F]/20"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label className="flex items-center gap-2">
-                <Truck className="w-4 h-4" />
-                Shipping Cost (per shipment)
-              </Label>
-              <Input
-                type="number"
-                step="0.01"
-                placeholder="Wallmates shipping cost"
-                value={wallmatesShipping}
-                onChange={(e) => setWallmatesShipping(e.target.value)}
-                className="transition-all duration-200 focus:ring-2 focus:ring-[#FF6D3F] border-[#FF6D3F]/20"
-              />
-            </div>
-          </div>
-        </div>
+        <WallmatesCosts 
+          wallmatesPricePerSqFt={wallmatesPricePerSqFt}
+          setWallmatesPricePerSqFt={setWallmatesPricePerSqFt}
+          wallmatesBoxCost={wallmatesBoxCost}
+          setWallmatesBoxCost={setWallmatesBoxCost}
+          wallmatesShipping={wallmatesShipping}
+          setWallmatesShipping={setWallmatesShipping}
+        />
       </div>
 
-      {showResults && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mt-8 space-y-6"
-        >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="p-4 bg-gray-50 rounded-lg">
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Your Current Monthly Cost</h3>
-              <p className="text-3xl font-bold text-gray-800">
-                {formatCurrency(currentTotalCost)}
-              </p>
-            </div>
-            
-            <div className="p-4 bg-gray-50 rounded-lg">
-              <h3 className="text-lg font-semibold text-[#FF6D3F] mb-2">Wallmates Monthly Cost</h3>
-              <p className="text-3xl font-bold text-[#FF6D3F]">
-                {formatCurrency(wallmatesTotalCost)}
-              </p>
-            </div>
-          </div>
-          
-          <div className="p-6 bg-gradient-to-r from-[#FF6D3F]/10 to-white rounded-lg text-center">
-            <div className="flex items-center justify-center mb-2">
-              <ArrowLeftRight className="w-6 h-6 text-[#FF6D3F] mr-2" />
-              <h3 className="text-xl font-semibold text-gray-900">Your Estimated Monthly Savings</h3>
-            </div>
-            <p className="text-4xl font-bold text-[#FF6D3F]">
-              {formatCurrency(savings)}
-            </p>
-            <p className="mt-4 text-sm text-gray-600">
-              Switch to Wallmates and start saving today!
-            </p>
-          </div>
-        </motion.div>
-      )}
+      <SavingsResults 
+        currentTotalCost={currentTotalCost}
+        wallmatesTotalCost={wallmatesTotalCost}
+        savings={savings}
+        showResults={showResults}
+        formatCurrency={formatCurrency}
+      />
     </Card>
   );
 };
