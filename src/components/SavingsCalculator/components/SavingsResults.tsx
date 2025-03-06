@@ -62,6 +62,13 @@ const SavingsResults: React.FC<SavingsResultsProps> = ({
           <span className="text-sm font-medium">Annual Savings</span>
           <span className="font-bold text-[#FF6D3F]">{formatCurrency(savings * 12)}</span>
         </div>
+        
+        <div className="flex justify-between items-center pt-2 mt-2 border-t border-gray-200">
+          <span className="text-sm font-medium">Savings Rate</span>
+          <span className="font-bold text-[#FF6D3F]">
+            {currentTotalCost > 0 ? Math.round((savings / currentTotalCost) * 100) : 0}%
+          </span>
+        </div>
       </div>
       
       <div className="text-center text-sm text-gray-500 mt-4">
