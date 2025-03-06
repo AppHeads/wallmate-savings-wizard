@@ -51,7 +51,7 @@ const SavingsCalculator = () => {
   return (
     <div className="w-full max-w-4xl mx-auto bg-white">
       <div className="text-left mb-8">
-        <div className="flex items-center gap-4 mb-4">
+        <div className="flex flex-col items-start gap-2 mb-4">
           <img 
             src="/lovable-uploads/3150b3ba-2981-4e47-a59a-1b68732c5303.png" 
             alt="Wallmates Logo" 
