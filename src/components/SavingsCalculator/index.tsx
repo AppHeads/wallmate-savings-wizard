@@ -61,17 +61,6 @@ const SavingsCalculator = () => {
 
   return (
     <div className="w-full max-w-4xl mx-auto bg-white">
-      <div className="text-left mb-8">
-        <div className="flex flex-col items-start gap-2 mb-4">
-          <h1 className="text-3xl font-bold text-gray-900">Savings Calculator</h1>
-        </div>
-        <p className="text-gray-600 text-lg">
-          Use Wallmates savings calculator to quickly estimate your potential savings compared to your 
-          current printing costs. Enter your current costs and adjust the Wallmates pricing to calculate 
-          your estimated monthly savings with an itemized breakdown.
-        </p>
-      </div>
-
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
         <div className="lg:col-span-3 space-y-6">
           <EstimatedVolume 
